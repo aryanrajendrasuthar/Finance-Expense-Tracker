@@ -63,7 +63,7 @@ router.get('/monthly', authenticate, async (req, res) => {
       const key = `${year}-${String(m).padStart(2, '0')}`;
       monthsMap[key] = { month: key, income: 0, expenses: 0 };
     }
-    rows[0].forEach(r => {
+    rows.forEach(r => {
       monthsMap[r.month] = {
         month: r.month,
         income: parseFloat(r.income),
@@ -108,7 +108,7 @@ router.get('/categories', authenticate, async (req, res) => {
       { replacements: { userId, type, month }, type: 'SELECT' }
     );
 
-    const data = rows[0].map(r => ({
+    const data = rows.map(r => ({
       ...r,
       total: parseFloat(r.total),
     }));

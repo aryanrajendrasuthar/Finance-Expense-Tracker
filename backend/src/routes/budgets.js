@@ -63,8 +63,8 @@ router.post('/', authenticate, [
     if (existing) return res.status(409).json({ error: 'Budget for this category and month already exists' });
 
     const budget = await Budget.create({ userId: req.user.id, categoryId, limit, month });
-    const [enriched] = await enrichBudgets(req.user.id, month);
-    const fresh = (await enrichBudgets(req.user.id, month)).find(b => b.id === budget.id);
+    const enriched = await enrichBudgets(req.user.id, month);
+    const fresh = enriched.find(b => b.id === budget.id);
     res.status(201).json(fresh || budget);
   } catch (err) {
     console.error(err);
